@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeLogger", "TimeLogger.csproj", "{3F65C056-6117-480F-ABB1-D51D1F196A03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F65C056-6117-480F-ABB1-D51D1F196A03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F65C056-6117-480F-ABB1-D51D1F196A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F65C056-6117-480F-ABB1-D51D1F196A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F65C056-6117-480F-ABB1-D51D1F196A03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C20F4555-AE39-42B6-90CD-8022162A616C}
+	EndGlobalSection
+EndGlobal
