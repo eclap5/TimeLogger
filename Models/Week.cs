@@ -6,7 +6,7 @@ namespace TimeLogger.Models
     {
         [Key]
         public int Id { get; set; }
-        public string WeekNumber { get; set; }
-        public List<Log> Logs { get; set; }
+        public string? WeekNumber { get; set; }
+        public List<Log>? Logs { get; set; }
     }
 }

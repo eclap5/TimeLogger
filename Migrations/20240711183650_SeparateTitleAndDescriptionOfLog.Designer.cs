@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeLogger.Models.Data;
 
@@ -11,9 +12,11 @@ using TimeLogger.Models.Data;
 namespace TimeLogger.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240711183650_SeparateTitleAndDescriptionOfLog")]
+    partial class SeparateTitleAndDescriptionOfLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,9 +38,6 @@ namespace TimeLogger.Migrations
 
                     b.Property<int>("DayCategory")
                         .HasColumnType("int");
-
-                    b.Property<string>("Duration")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EndTime")
                         .HasColumnType("nvarchar(max)");
@@ -70,6 +70,7 @@ namespace TimeLogger.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("WeekNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
