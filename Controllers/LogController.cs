@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TimeLogger.Models.Data;
+using Microsoft.EntityFrameworkCore;
+using TimeLogger.Data;
 
 namespace TimeLogger.Controllers
 {
@@ -9,7 +10,7 @@ namespace TimeLogger.Controllers
 
         public IActionResult Index()
         {
-            var logs = _dbContext.Logs.ToList();
+            var logs = _dbContext.Logs.Include(d => d.Day).ToList();
 
             return View(logs);
         }

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TimeLogger.Models.Data.Enum;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeLogger.Models
 {
@@ -9,10 +9,11 @@ namespace TimeLogger.Models
         public int Id { get; set; }
         public string? StartTime { get; set; }
         public string? EndTime { get; set; }
-        public string? Duration { get; set; }
-        public DateOnly Date { get; set; }
         public string? TaskTitle { get; set; }
         public string? TaskDescription { get; set; }
-        public DayCategory DayCategory { get; set; }
+
+        [ForeignKey("Day")]
+        public int DayId { get; set; }
+        public Day? Day { get; set; }
     }
 }

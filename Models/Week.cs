@@ -6,7 +6,8 @@ namespace TimeLogger.Models
     {
         [Key]
         public int Id { get; set; }
-        public string? WeekNumber { get; set; }
-        public List<Log>? Logs { get; set; }
+        public int Year { get; set; }
+        public int WeekNumber { get; set; }
+        public List<Day>? Days { get; set; }
     }
 }

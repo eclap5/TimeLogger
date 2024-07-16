@@ -3,17 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeLogger.Data;
+
 
 #nullable disable
 
 namespace TimeLogger.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240716183608_UpdatedDatabaseStructure")]
+    partial class UpdatedDatabaseStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +47,7 @@ namespace TimeLogger.Migrations
 
                     b.HasIndex("WeekId");
 
-                    b.ToTable("Days");
+                    b.ToTable("Day");
                 });
 
             modelBuilder.Entity("TimeLogger.Models.Log", b =>
@@ -84,8 +88,8 @@ namespace TimeLogger.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("WeekNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("WeekNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -106,13 +110,11 @@ namespace TimeLogger.Migrations
 
             modelBuilder.Entity("TimeLogger.Models.Log", b =>
                 {
-                    b.HasOne("TimeLogger.Models.Day", "Day")
+                    b.HasOne("TimeLogger.Models.Day", null)
                         .WithMany("Logs")
                         .HasForeignKey("DayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Day");
                 });
 
             modelBuilder.Entity("TimeLogger.Models.Day", b =>

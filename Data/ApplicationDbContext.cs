@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TimeLogger.Models;
 
-namespace TimeLogger.Models.Data
+namespace TimeLogger.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -10,6 +11,7 @@ namespace TimeLogger.Models.Data
         }
 
         public DbSet<Week> Weeks { get; set; }
+        public DbSet<Day> Days { get; set; }
         public DbSet<Log> Logs { get; set; }
     }
 }
