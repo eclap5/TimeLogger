@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<Log>
 
-@{
-    DateOnly date = DateOnly.FromDateTime(DateTime.Now);
-}
 <main>
     <h1>Log time</h1>
     <div class="container-fluid py-5 m-0 p-0">
@@ -51,17 +48,14 @@
                 <tbody>
                     @foreach (var log in Model)
                     {
-                        if (log.Day?.Date == date)
-                        {
-                            <tr>
-                                <td>@log.Day.Date</td>
-                                <td>@log.StartTime</td>
-                                <td>@log.EndTime</td>
-                                <td>Duration</td>
-                                <td>@log.TaskTitle</td>
-                                <td>@log.TaskDescription</td>
-                            </tr>
-                        }
+                        <tr>
+                            <td>@log.Day?.Date</td>
+                            <td>@log.StartTime</td>
+                            <td>@log.EndTime</td>
+                            <td>Duration</td>
+                            <td>@log.TaskTitle</td>
+                            <td>@log.TaskDescription</td>
+                        </tr>
                     }
                 </tbody>
             </table>
