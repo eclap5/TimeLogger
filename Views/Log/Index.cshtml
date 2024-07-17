@@ -14,7 +14,7 @@
             </div>
             <div class="col">
                 <label for="endTime">End time</label>
-                <input id="endTime" type="time" class="form-control fs-4" placeholder="hh:mm">
+                <input id="endTime" type="time" class="form-control fs-4">
             </div>
             <div class="col">
                 <label for="duration">Duration</label>
@@ -51,7 +51,7 @@
                 <tbody>
                     @foreach (var log in Model)
                     {
-                        if (log.Day.Date == date)
+                        if (log.Day?.Date == date)
                         {
                             <tr>
                                 <td>@log.Day.Date</td>
