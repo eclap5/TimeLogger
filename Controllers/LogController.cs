@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TimeLogger.Data;
+using TimeLogger.Interfaces;
+using TimeLogger.Models;
 
 namespace TimeLogger.Controllers
 {
-    public class LogController(ApplicationDbContext dbContext) : Controller
+    public class LogController(ILogRepository logRepository) : Controller
     {
-        private readonly ApplicationDbContext _dbContext = dbContext;
+        private readonly ILogRepository _logRepository = logRepository;
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var logs = _dbContext.Logs.Include(d => d.Day).ToList();
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+
+            IEnumerable<Log> logs = await _logRepository.GetLogsByDateAsync(currentDate);
 
             return View(logs);
         }

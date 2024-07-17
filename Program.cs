@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using TimeLogger.Data;
+using TimeLogger.Interfaces;
+using TimeLogger.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ILogRepository, LogRepository>();
+builder.Services.AddScoped<IDayRepository, DayRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

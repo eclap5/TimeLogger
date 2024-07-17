@@ -31,6 +31,11 @@ namespace TimeLogger.Repository
             return await _context.Logs.ToListAsync();
         }
 
+        public async Task<IEnumerable<Log>> GetLogsByDateAsync(DateOnly date)
+        {
+            return await _context.Logs.Include(log => log.Day).Where(log => log.Day != null && log.Day.Date == date).ToListAsync();
+        }
+
         public async Task<IEnumerable<Log>> GetLogsByDayIdAsync(int dayId)
         {
             return await _context.Logs.Where(d => d.Id == dayId).ToListAsync();
