@@ -1,64 +1,62 @@
-﻿@model IEnumerable<Log>
+﻿@using TimeLogger.ViewModels
+@model LogViewModel
 
-<main>
-    <h1>Log time</h1>
-    <div class="container-fluid py-5 m-0 p-0">
+<h1>Log time</h1>
+<div class="container-fluid py-5 m-0 p-0">
+    <form method="post" asp-action="Add">
         <div class="row row-cols-3 g-2">
-            <input type="date" class="form-control col fs-4">
+            <input asp-for="NewLog.Day.Date" type="date" class="form-control col fs-4" required>
             <div class="col">
-                <label for="startTime">Start time</label>
-                <input id="startTime" type="time" class="form-control fs-4">
+                <label asp-for="NewLog.StartTime">Start time</label>
+                <input asp-for="NewLog.StartTime" type="time" class="form-control fs-4" required>
             </div>
             <div class="col">
-                <label for="endTime">End time</label>
-                <input id="endTime" type="time" class="form-control fs-4">
-            </div>
-            <div class="col">
-                <label for="duration">Duration</label>
-                <input id="duration" type="time" class="form-control fs-4">
+                <label asp-for="NewLog.EndTime">End time</label>
+                <input asp-for="NewLog.EndTime" type="time" class="form-control fs-4" required>
             </div>
         </div>
-            
+
         <div class="mt-4">
-            <label for="taskTitle" class="form-label">Title</label>
-            <input type="text" class="form-control" id="taskTitle">
+            <label asp-for="NewLog.TaskTitle" class="form-label">Title</label>
+            <input asp-for="NewLog.TaskTitle" type="text" class="form-control" required>
         </div>
 
         <div class="mt-2">
-            <label for="taskDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="taskDescription" rows="3"></textarea>
+            <label asp-for="NewLog.TaskDescription" class="form-label">Description</label>
+            <textarea asp-for="NewLog.TaskDescription" class="form-control" rows="3"></textarea>
         </div>
-        
+
         <button class="btn btn-primary mt-2">Submit</button>
         <button class="btn btn-secondary mt-2">Clear</button>
-        
-        <div class="mt-5">
-            Today's logs
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Start time</th>
-                        <th scope="col">End time</th>
-                        <th scope="col">Duration</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var log in Model)
+    </form>
+    
+    <div class="mt-5">
+        Today's logs
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Start time</th>
+                    <th scope="col">End time</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Logs != null)
+                {
+                    @foreach (var log in Model.Logs)
                     {
                         <tr>
                             <td>@log.Day?.Date</td>
                             <td>@log.StartTime</td>
                             <td>@log.EndTime</td>
-                            <td>Duration</td>
                             <td>@log.TaskTitle</td>
                             <td>@log.TaskDescription</td>
                         </tr>
                     }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
-</main>
+</div>

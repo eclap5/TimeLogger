@@ -26,6 +26,11 @@ namespace TimeLogger.Repository
             return await _context.Days.FindAsync(id);
         }
 
+        public async Task<Day?> GetDayByDateAsync(DateOnly? date)
+        {
+            return await _context.Days.Where(d => d.Date == date).FirstAsync();
+        }
+
         public async Task<IEnumerable<Day>> GetDaysAsync()
         {
             return await _context.Days.ToListAsync();

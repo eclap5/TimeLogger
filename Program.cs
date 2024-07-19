@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ILogRepository, LogRepository>();
 builder.Services.AddScoped<IDayRepository, DayRepository>();
+builder.Services.AddScoped<IWeekRepository, WeekRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

@@ -26,6 +26,11 @@ namespace TimeLogger.Repository
             return await _context.Weeks.FindAsync(id);
         }
 
+        public async Task<Week?> GetWeekByWeekNum(int? weekNum)
+        {
+            return await _context.Weeks.Where(w => w.WeekNumber == weekNum).FirstAsync();
+        }
+
         public async Task<IEnumerable<Week>> GetWeeksAsync()
         {
             return await _context.Weeks.ToListAsync();
