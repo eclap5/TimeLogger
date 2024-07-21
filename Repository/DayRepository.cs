@@ -9,10 +9,11 @@ namespace TimeLogger.Repository
     {
         private readonly ApplicationDbContext _context = context;
 
-        public async Task<bool> AddDayAsync(Day day)
+        public async Task<Day> AddDayAsync(Day day)
         {
             await _context.AddAsync(day);
-            return await SaveAsync();
+            await _context.SaveChangesAsync();
+            return day;
         }
 
         public async Task<bool> DeleteDayAsync(Day day)
@@ -28,7 +29,7 @@ namespace TimeLogger.Repository
 
         public async Task<Day?> GetDayByDateAsync(DateOnly? date)
         {
-            return await _context.Days.Where(d => d.Date == date).FirstAsync();
+            return await _context.Days.Where(d => d.Date == date).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Day>> GetDaysAsync()

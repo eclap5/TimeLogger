@@ -9,10 +9,11 @@ namespace TimeLogger.Repository
     {
         private readonly ApplicationDbContext _context = context;
 
-        public async Task<bool> AddLogAsync(Log log)
+        public async Task<Log> AddLogAsync(Log log)
         {
             await _context.AddAsync(log);
-            return await SaveAsync();
+            await _context.SaveChangesAsync();
+            return log;
         }
 
         public async Task<bool> DeleteLogAsync(Log log)

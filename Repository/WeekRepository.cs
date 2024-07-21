@@ -9,10 +9,11 @@ namespace TimeLogger.Repository
     {
         private readonly ApplicationDbContext _context = context;
 
-        public async Task<bool> AddWeekAsync(Week week)
+        public async Task<Week> AddWeekAsync(Week week)
         {
             await _context.AddAsync(week);
-            return await SaveAsync();
+            await _context.SaveChangesAsync();
+            return week;
         }
 
         public async Task<bool> DeleteWeekAsync(Week week)
@@ -26,9 +27,9 @@ namespace TimeLogger.Repository
             return await _context.Weeks.FindAsync(id);
         }
 
-        public async Task<Week?> GetWeekByWeekNum(int? weekNum)
+        public async Task<Week?> GetWeekByWeekNumAsync(int? weekNum)
         {
-            return await _context.Weeks.Where(w => w.WeekNumber == weekNum).FirstAsync();
+            return await _context.Weeks.Where(w => w.WeekNumber == weekNum).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Week>> GetWeeksAsync()

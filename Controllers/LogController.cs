@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
+using TimeLogger.Common;
 using TimeLogger.Interfaces;
 using TimeLogger.Models;
 using TimeLogger.ViewModels;
@@ -27,30 +27,40 @@ namespace TimeLogger.Controllers
                 return View();
             }
 
-            DateOnly date = logViewModel.NewLog!.Day!.Date!;
-            Day? day = await _dayRepository.GetDayByDateAsync(date);
+            DateOnly? date = logViewModel!.Log!.Day!.Date;
 
+            Day? day = await _dayRepository.GetDayByDateAsync(date);
             if (day == null)
             {
-                int weekNum = GetWeekNumber(date);
+                int weekNum = Utilities.GetWeekNumber(date);
+
                 Week? week = await _weekRepository.GetWeekByWeekNumAsync(weekNum);
-                
                 if (week == null)
                 {
-                    Week newWeek = new()
+                    week = new()
                     {
                         WeekNumber = weekNum,
-                        Year = GetYear(),
+                        Year = Utilities.GetYear(),
                         Days = []
                     };
-                    await _weekRepository.AddWeekAsync(newWeek);
+                    week = await _weekRepository.AddWeekAsync(week);
                 }
 
-                await _dayRepository.AddDayAsync(day);
+                day = new()
+                {
+                    Date = date,
+                    WeekDay = Utilities.GetWeekDay(date),
+                    WeekId = week!.Id
+                };
+                day = await _dayRepository.AddDayAsync(day);
             }
 
-            await _logRepository.AddLogAsync(logViewModel.NewLog);
-            return View();
+            logViewModel.Log.DayId = day!.Id;
+            logViewModel.Log.Day = day;
+
+            await _logRepository.AddLogAsync(logViewModel.Log);
+
+            return Redirect("Index");
         }
 
         private async Task<LogViewModel> GetLogViewModel()
@@ -59,33 +69,13 @@ namespace TimeLogger.Controllers
 
             LogViewModel logView = new()
             {
-                NewLog = new Log() { Day = new() },
+                Log = new Log() { Day = new() },
                 Logs = await _logRepository.GetLogsByDateAsync(currentDate),
                 Days = await _dayRepository.GetDaysAsync(),
                 Weeks = await _weekRepository.GetWeeksAsync()
             };
 
             return logView;
-        }
-
-        private static int GetWeekNumber(DateOnly dateOnly)
-        {
-            Calendar calendar = CultureInfo.CurrentCulture.Calendar;
-            
-            CalendarWeekRule calendarWeekRule = CalendarWeekRule.FirstFourDayWeek;
-            DayOfWeek firstDayOfWeek = DayOfWeek.Monday;
-
-            string strDateOnly = dateOnly.ToString()!;
-            DateTime date = DateTime.Parse(strDateOnly);
-            int weekNum = calendar.GetWeekOfYear(date, calendarWeekRule, firstDayOfWeek);
-                
-            return weekNum;
-        }
-
-        private static int GetYear()
-        {
-            Calendar calendar = CultureInfo.CurrentCulture.Calendar;
-            return calendar.GetYear(DateTime.Now);
         }
     }
 }

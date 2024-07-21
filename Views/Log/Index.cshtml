@@ -5,25 +5,25 @@
 <div class="container-fluid py-5 m-0 p-0">
     <form method="post" asp-action="Add">
         <div class="row row-cols-3 g-2">
-            <input asp-for="NewLog.Day.Date" type="date" class="form-control col fs-4" required>
+            <input asp-for="Log.Day.Date" type="date" class="form-control col fs-4" required>
             <div class="col">
-                <label asp-for="NewLog.StartTime">Start time</label>
-                <input asp-for="NewLog.StartTime" type="time" class="form-control fs-4" required>
+                <label asp-for="Log.StartTime">Start time</label>
+                <input asp-for="Log.StartTime" type="time" class="form-control fs-4" required>
             </div>
             <div class="col">
-                <label asp-for="NewLog.EndTime">End time</label>
-                <input asp-for="NewLog.EndTime" type="time" class="form-control fs-4" required>
+                <label asp-for="Log.EndTime">End time</label>
+                <input asp-for="Log.EndTime" type="time" class="form-control fs-4" required>
             </div>
         </div>
 
         <div class="mt-4">
-            <label asp-for="NewLog.TaskTitle" class="form-label">Title</label>
-            <input asp-for="NewLog.TaskTitle" type="text" class="form-control" required>
+            <label asp-for="Log.TaskTitle" class="form-label">Title</label>
+            <input asp-for="Log.TaskTitle" type="text" class="form-control" required>
         </div>
 
         <div class="mt-2">
-            <label asp-for="NewLog.TaskDescription" class="form-label">Description</label>
-            <textarea asp-for="NewLog.TaskDescription" class="form-control" rows="3"></textarea>
+            <label asp-for="Log.TaskDescription" class="form-label">Description</label>
+            <textarea asp-for="Log.TaskDescription" class="form-control" rows="3"></textarea>
         </div>
 
         <button class="btn btn-primary mt-2">Submit</button>
@@ -31,7 +31,7 @@
     </form>
     
     <div class="mt-5">
-        Today's logs
+        Today's Logs
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -45,14 +45,14 @@
             <tbody>
                 @if (Model.Logs != null)
                 {
-                    @foreach (var log in Model.Logs)
+                    @foreach (var Log in Model.Logs)
                     {
                         <tr>
-                            <td>@log.Day?.Date</td>
-                            <td>@log.StartTime</td>
-                            <td>@log.EndTime</td>
-                            <td>@log.TaskTitle</td>
-                            <td>@log.TaskDescription</td>
+                            <td>@Log.Day?.Date</td>
+                            <td>@Log.StartTime</td>
+                            <td>@Log.EndTime</td>
+                            <td>@Log.TaskTitle</td>
+                            <td>@Log.TaskDescription</td>
                         </tr>
                     }
                 }
