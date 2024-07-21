@@ -40,7 +40,7 @@ namespace TimeLogger.Controllers
                     week = new()
                     {
                         WeekNumber = weekNum,
-                        Year = Utilities.GetYear(),
+                        Year = Utilities.GetYear(date),
                         Days = []
                     };
                     week = await _weekRepository.AddWeekAsync(week);
