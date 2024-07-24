@@ -45,7 +45,8 @@
             <tbody>
                 @if (Model.Logs != null)
                 {
-                    @foreach (var Log in Model.Logs)
+                    var logArray = Model.Logs.OrderBy(l => l.StartTime);
+                    @foreach (var Log in logArray)
                     {
                         <tr>
                             <td>@Log.Day?.Date</td>
