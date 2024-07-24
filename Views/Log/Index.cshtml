@@ -5,7 +5,7 @@
 <div class="container-fluid py-5 m-0 p-0">
     <form method="post" asp-action="Add">
         <div class="row row-cols-3 g-2">
-            <input asp-for="Log.Day.Date" type="date" class="form-control col fs-4" required>
+            <input asp-for="Log.Day.Date" type="date" class="form-control col fs-4" value="yyyy-mm-dd" required>
             <div class="col">
                 <label asp-for="Log.StartTime">Start time</label>
                 <input asp-for="Log.StartTime" type="time" class="form-control fs-4" required>
@@ -43,7 +43,12 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.Logs != null)
+                @if (Model.Error.IsError) {
+                    <tr>
+                        <td colspan="5" class="text-danger">@Model.Error.Message</td>
+                    </tr>
+                }
+                else if (Model.Logs != null)
                 {
                     var logArray = Model.Logs.OrderBy(l => l.StartTime);
                     @foreach (var Log in logArray)

@@ -14,6 +14,6 @@ namespace TimeLogger.Models
 
         [ForeignKey("Day")]
         public int DayId { get; set; }
-        public Day? Day { get; set; }
+        public Day Day { get; set; } = new Day();
     }
 }

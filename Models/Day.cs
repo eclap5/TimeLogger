@@ -7,12 +7,12 @@ namespace TimeLogger.Models
     {
         [Key]
         public int Id { get; set; }
-        public DateOnly? Date { get; set; }
+        public DateOnly Date { get; set; }
         public string? WeekDay { get; set; }
         
         [ForeignKey("Week")]
         public int WeekId { get; set; }
-        public List<Log>? Logs { get; set; }
-        public Week? Week { get; set; }
+        public List<Log> Logs { get; set; } = [];
+        public Week Week { get; set; } = new Week();
     }
 }

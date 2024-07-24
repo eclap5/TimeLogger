@@ -24,10 +24,29 @@ namespace TimeLogger.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                logViewModel.Error = new Error()
+                {
+                    IsError = true,
+                    StatusCode = "400",
+                    Message = "Invalid model state"
+                };
+                return View("Index", logViewModel);
             }
 
-            DateOnly? date = logViewModel!.Log!.Day!.Date;
+            DateOnly date = logViewModel.Log.Day.Date;
+            string startTime = logViewModel.Log.StartTime!;
+            string endTime = logViewModel.Log.EndTime!;
+
+            if (Utilities.ParseDateTime(date, startTime) > Utilities.ParseDateTime(date, endTime))
+            {
+                logViewModel.Error = new Error()
+                {
+                    IsError = true,
+                    StatusCode = "400",
+                    Message = "Start time cannot be greater than end time"
+                };
+                return View("Index", logViewModel);
+            }
 
             Day? day = await _dayRepository.GetDayByDateAsync(date);
             if (day == null)
@@ -70,7 +89,7 @@ namespace TimeLogger.Controllers
             LogViewModel logView = new()
             {
                 Error = new Error() { IsError = false },
-                Log = new Log() { Day = new() },
+                Log = new Log(),
                 Logs = await _logRepository.GetLogsByDateAsync(currentDate),
                 Days = await _dayRepository.GetDaysAsync(),
                 Weeks = await _weekRepository.GetWeeksAsync()
@@ -80,3 +99,4 @@ namespace TimeLogger.Controllers
         }
     }
 }
+
