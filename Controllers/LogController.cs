@@ -69,6 +69,7 @@ namespace TimeLogger.Controllers
 
             LogViewModel logView = new()
             {
+                Error = new Error() { IsError = false },
                 Log = new Log() { Day = new() },
                 Logs = await _logRepository.GetLogsByDateAsync(currentDate),
                 Days = await _dayRepository.GetDaysAsync(),
