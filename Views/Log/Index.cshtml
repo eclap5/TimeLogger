@@ -1,11 +1,15 @@
 ﻿@using TimeLogger.ViewModels
 @model LogViewModel
 
+@{
+    string formattedDate = Model.Log.Day.Date == new DateOnly(0001, 1, 1) ? "" : Model.Log.Day.Date.ToString("yyyy-MM-dd");
+}
+
 <h1>Log time</h1>
 <div class="container-fluid py-5 m-0 p-0">
-    <form method="post" asp-action="Add">
+    <form method="post" asp-action="Add" id="logForm">
         <div class="row row-cols-3 g-2">
-            <input asp-for="Log.Day.Date" type="date" class="form-control col fs-4" value="yyyy-mm-dd" required>
+            <input asp-for="Log.Day.Date" type="date" class="form-control col fs-4" value="@formattedDate" required>
             <div class="col">
                 <label asp-for="Log.StartTime">Start time</label>
                 <input asp-for="Log.StartTime" type="time" class="form-control fs-4" required>
@@ -27,7 +31,12 @@
         </div>
 
         <button class="btn btn-primary mt-2">Submit</button>
-        <button class="btn btn-secondary mt-2">Clear</button>
+        <button class="btn btn-secondary mt-2" onclick="clearForm()">Clear</button>
+        
+        @if (Model.Error.IsError)
+        {
+            <div class="text-danger">@Model.Error.Message</div>
+        }
     </form>
     
     <div class="mt-5">
@@ -43,15 +52,10 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.Error.IsError) {
-                    <tr>
-                        <td colspan="5" class="text-danger">@Model.Error.Message</td>
-                    </tr>
-                }
-                else if (Model.Logs != null)
+                @if (Model.Logs != null)
                 {
                     var logArray = Model.Logs.OrderBy(l => l.StartTime);
-                    @foreach (var Log in logArray)
+                    foreach (var Log in logArray)
                     {
                         <tr>
                             <td>@Log.Day?.Date</td>
@@ -66,3 +70,12 @@
         </table>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        function clearForm() {
+            document.getElementById("logForm").reset();
+        }
+    </script>
+}

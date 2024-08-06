@@ -7,7 +7,7 @@ namespace TimeLogger.Models
     {
         [Key]
         public int Id { get; set; }
-        public DateOnly Date { get; set; }
+        public DateOnly Date { get; set; } = new DateOnly(0001, 1, 1);
         public string? WeekDay { get; set; }
         
         [ForeignKey("Week")]
