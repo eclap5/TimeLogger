@@ -1,0 +1,57 @@
+﻿@using TimeLogger.ViewModels
+@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+
+    DateOnly formattedDate = new DateOnly(0001, 1, 1);
+}
+
+<div class="container">
+    <h1>Search logs</h1>
+    <div class="py-5 m-0 p-0">
+        <form method="get" asp-action="SearchTerm" id="searchForm">
+            <div class="row row-cols-2">
+                <div class="dropdown col-auto">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @Model.SearchTermText
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">By date</a></li>
+                        <li><a class="dropdown-item" href="#">By week</a></li>
+                    </ul>
+                </div>
+                <button class="btn btn-primary col-auto">Search</button>
+            </div>
+
+            <input type="hidden" id="isDateSearch" name="IsDateSearch" value="@Model.IsDateSearch">
+            <input type="hidden" id="isWeekSearch" name="IsWeekSearch" value="@Model.IsWeekSearch">
+        </form>
+
+            <div class="row row-cols-2 g-2 py-3 m-0 p-0">
+                @if(Model.IsDateSearch)
+                {
+                    <input type="date" class="form-control col fs-4" value="@formattedDate" required>
+                }
+                else if(Model.IsWeekSearch)
+                {
+                    <input type="week" class="form-control col fs-4" required>
+                }
+
+            </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".dropdown-menu a").click(function () {
+                const selText = $(this).text();
+                $('#isDateSearch').val(selText === 'By date');
+                $('#isWeekSearch').val(selText === 'By week');
+                
+                $('#searchForm').submit();
+            });
+        });
+    </script>
+}

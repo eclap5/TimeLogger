@@ -2,72 +2,74 @@
 @model LogViewModel
 
 @{
+    ViewData["Title"] = "Log time";
     string formattedDate = Model.Log.Day.Date == new DateOnly(0001, 1, 1) ? "" : Model.Log.Day.Date.ToString("yyyy-MM-dd");
 }
-
-<h1>Log time</h1>
-<div class="container-fluid py-5 m-0 p-0">
-    <form method="post" asp-action="Add" id="logForm">
-        <div class="row row-cols-3 g-2">
-            <input asp-for="Log.Day.Date" type="date" class="form-control col fs-4" value="@formattedDate" required>
-            <div class="col">
-                <label asp-for="Log.StartTime">Start time</label>
-                <input asp-for="Log.StartTime" type="time" class="form-control fs-4" required>
+<div class="container">
+    <h1>Log time</h1>
+    <div class="container-fluid py-5 m-0 p-0">
+        <form method="post" asp-action="Add" id="logForm">
+            <div class="row row-cols-3 g-2">
+                <input asp-for="Log.Day.Date" type="date" class="form-control col fs-4" value="@formattedDate" required>
+                <div class="col">
+                    <label asp-for="Log.StartTime">Start time</label>
+                    <input asp-for="Log.StartTime" type="time" class="form-control fs-4" required>
+                </div>
+                <div class="col">
+                    <label asp-for="Log.EndTime">End time</label>
+                    <input asp-for="Log.EndTime" type="time" class="form-control fs-4" required>
+                </div>
             </div>
-            <div class="col">
-                <label asp-for="Log.EndTime">End time</label>
-                <input asp-for="Log.EndTime" type="time" class="form-control fs-4" required>
+
+            <div class="mt-4">
+                <label asp-for="Log.TaskTitle" class="form-label">Title</label>
+                <input asp-for="Log.TaskTitle" type="text" class="form-control" required>
             </div>
-        </div>
 
-        <div class="mt-4">
-            <label asp-for="Log.TaskTitle" class="form-label">Title</label>
-            <input asp-for="Log.TaskTitle" type="text" class="form-control" required>
-        </div>
+            <div class="mt-2">
+                <label asp-for="Log.TaskDescription" class="form-label">Description</label>
+                <textarea asp-for="Log.TaskDescription" class="form-control" rows="3"></textarea>
+            </div>
 
-        <div class="mt-2">
-            <label asp-for="Log.TaskDescription" class="form-label">Description</label>
-            <textarea asp-for="Log.TaskDescription" class="form-control" rows="3"></textarea>
-        </div>
-
-        <button class="btn btn-primary mt-2">Submit</button>
-        <button class="btn btn-secondary mt-2" onclick="clearForm()">Clear</button>
+            <button class="btn btn-primary mt-2">Submit</button>
+            <button class="btn btn-secondary mt-2" onclick="clearForm()">Clear</button>
         
-        @if (Model.Error.IsError)
-        {
-            <div class="text-danger">@Model.Error.Message</div>
-        }
-    </form>
+            @if (Model.Error.IsError)
+            {
+                <div class="text-danger">@Model.Error.Message</div>
+            }
+        </form>
     
-    <div class="mt-5">
-        Today's Logs
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Start time</th>
-                    <th scope="col">End time</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Logs != null)
-                {
-                    var logArray = Model.Logs.OrderBy(l => l.StartTime);
-                    foreach (var Log in logArray)
+        <div class="mt-5">
+            Today's Logs
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Start time</th>
+                        <th scope="col">End time</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Logs != null)
                     {
-                        <tr>
-                            <td>@Log.Day?.Date</td>
-                            <td>@Log.StartTime</td>
-                            <td>@Log.EndTime</td>
-                            <td>@Log.TaskTitle</td>
-                            <td>@Log.TaskDescription</td>
-                        </tr>
+                        var logArray = Model.Logs.OrderBy(l => l.StartTime);
+                        foreach (var Log in logArray)
+                        {
+                            <tr>
+                                <td>@Log.Day?.Date</td>
+                                <td>@Log.StartTime</td>
+                                <td>@Log.EndTime</td>
+                                <td>@Log.TaskTitle</td>
+                                <td>@Log.TaskDescription</td>
+                            </tr>
+                        }
                     }
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
