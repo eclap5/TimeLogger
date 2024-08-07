@@ -10,7 +10,7 @@
 <div class="container">
     <h1>Search logs</h1>
     <div class="py-5 m-0 p-0">
-        <form method="get" asp-action="SearchTerm" id="searchForm">
+        <form method="get" asp-action="SearchTerm" id="searchTermForm">
             <div class="row row-cols-2">
                 <div class="dropdown col-auto">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,18 +27,27 @@
             <input type="hidden" id="isDateSearch" name="IsDateSearch" value="@Model.IsDateSearch">
             <input type="hidden" id="isWeekSearch" name="IsWeekSearch" value="@Model.IsWeekSearch">
         </form>
-
+        <form method ="get" asp-action="Search" id="searchForm">
             <div class="row row-cols-2 g-2 py-3 m-0 p-0">
-                @if(Model.IsDateSearch)
+                @if (Model.IsDateSearch)
                 {
-                    <input type="date" class="form-control col fs-4" value="@formattedDate" required>
+                    <div class="col m-0 p-0">
+                        <input asp-for="Date" type="date" class="form-control col fs-4" value="@formattedDate" required>
+                    </div>
                 }
-                else if(Model.IsWeekSearch)
+                else if (Model.IsWeekSearch)
                 {
-                    <input type="week" class="form-control col fs-4" required>
+                    <div class="col m-0 p-0">
+                        <label for="weekNumber">Week number</label>
+                        <input asp-for="WeekNumber" type="number" min="1" max="53" class="form-control col fs-4" required>
+                    </div>
+                    <div class="col m-0">
+                        <label for="year">Year</label>
+                        <input asp-for="Year" type="number" class="form-control col fs-4" required>
+                    </div>
                 }
-
             </div>
+        </form>
     </div>
 </div>
 
@@ -50,7 +59,7 @@
                 $('#isDateSearch').val(selText === 'By date');
                 $('#isWeekSearch').val(selText === 'By week');
                 
-                $('#searchForm').submit();
+                $('#searchTermForm').submit();
             });
         });
     </script>
