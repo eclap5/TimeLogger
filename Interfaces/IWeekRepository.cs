@@ -4,9 +4,9 @@ namespace TimeLogger.Interfaces
 {
     public interface IWeekRepository
     {
-        Task<IEnumerable<Week>> GetWeeksAsync();
+        Task<List<Week>> GetWeeksAsync();
         Task<Week?> GetWeekByIdAsync(int id);
-        Task<Week?> GetWeekByWeekNumAsync(int? weekNum);
+        Task<Week?> GetWeekByWeekNumAndYearAsync(int weekNum, int year);
         Task<Week> AddWeekAsync(Week week);
         Task<bool> UpdateWeekAsync(Week week);
         Task<bool> DeleteWeekAsync(Week week);

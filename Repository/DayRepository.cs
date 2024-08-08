@@ -27,17 +27,17 @@ namespace TimeLogger.Repository
             return await _context.Days.FindAsync(id);
         }
 
-        public async Task<Day?> GetDayByDateAsync(DateOnly? date)
+        public async Task<Day?> GetDayByDateAsync(DateOnly date)
         {
             return await _context.Days.Where(d => d.Date == date).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Day>> GetDaysAsync()
+        public async Task<List<Day>> GetDaysAsync()
         {
             return await _context.Days.ToListAsync();
         }
 
-        public async Task<IEnumerable<Day>> GetDaysByWeekIdAsync(int weekId)
+        public async Task<List<Day>> GetDaysByWeekIdAsync(int weekId)
         {
             return await _context.Days.Where(d => d.WeekId == weekId).ToListAsync();
         }

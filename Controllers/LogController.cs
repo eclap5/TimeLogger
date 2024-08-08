@@ -52,8 +52,9 @@ namespace TimeLogger.Controllers
             if (day == null)
             {
                 int weekNum = Utilities.GetWeekNumber(date);
+                int year = Utilities.GetYear(date);
 
-                Week? week = await _weekRepository.GetWeekByWeekNumAsync(weekNum);
+                Week? week = await _weekRepository.GetWeekByWeekNumAndYearAsync(weekNum, year);
                 if (week == null)
                 {
                     week = new()
@@ -69,15 +70,23 @@ namespace TimeLogger.Controllers
                 {
                     Date = date,
                     WeekDay = Utilities.GetWeekDay(date),
-                    WeekId = week!.Id
+                    WeekId = week!.Id,
+                    Logs = []
                 };
                 day = await _dayRepository.AddDayAsync(day);
             }
 
-            logViewModel.Log.DayId = day!.Id;
-            logViewModel.Log.Day = day;
+            Log log = new()
+            {
+                Day = day,
+                DayId = day.Id,
+                StartTime = startTime,
+                EndTime = endTime,
+                TaskTitle = logViewModel.Log.TaskTitle,
+                TaskDescription = logViewModel.Log.TaskDescription
+            };
 
-            await _logRepository.AddLogAsync(logViewModel.Log);
+            await _logRepository.AddLogAsync(log);
 
             return Redirect("Index");
         }

@@ -4,10 +4,10 @@ namespace TimeLogger.Interfaces
 {
     public interface IDayRepository
     {
-        Task<IEnumerable<Day>> GetDaysAsync();
-        Task<IEnumerable<Day>> GetDaysByWeekIdAsync(int weekId);
+        Task<List<Day>> GetDaysAsync();
+        Task<List<Day>> GetDaysByWeekIdAsync(int weekId);
         Task<Day?> GetDayByIdAsync(int id);
-        Task<Day> GetDayByDateAsync(DateOnly? date);
+        Task<Day?> GetDayByDateAsync(DateOnly date);
         Task<Day> AddDayAsync(Day day);
         Task<bool> UpdateDayAsync(Day day);
         Task<bool> DeleteDayAsync(Day day);

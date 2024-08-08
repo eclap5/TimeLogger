@@ -12,7 +12,6 @@ namespace TimeLogger.Models
         
         [ForeignKey("Week")]
         public int WeekId { get; set; }
-        public List<Log> Logs { get; set; } = [];
-        public Week Week { get; set; } = new Week();
+        public List<Log>? Logs { get; set; }
     }
 }

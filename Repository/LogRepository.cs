@@ -27,22 +27,22 @@ namespace TimeLogger.Repository
             return await _context.Logs.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Log>> GetLogsAsync()
+        public async Task<List<Log>> GetLogsAsync()
         {
             return await _context.Logs.ToListAsync();
         }
 
-        public async Task<IEnumerable<Log>> GetLogsByDateAsync(DateOnly date)
+        public async Task<List<Log>> GetLogsByDateAsync(DateOnly date)
         {
             return await _context.Logs.Include(log => log.Day).Where(log => log.Day != null && log.Day.Date == date).ToListAsync();
         }
 
-        public async Task<IEnumerable<Log>> GetLogsByDayIdAsync(int dayId)
+        public async Task<List<Log>> GetLogsByDayIdAsync(int dayId)
         {
-            return await _context.Logs.Where(d => d.Id == dayId).ToListAsync();
+            return await _context.Logs.Where(l => l.DayId == dayId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Log>> GetLogsByWeekIdAsync(int weekId)
+        public async Task<List<Log>> GetLogsByWeekIdAsync(int weekId)
         {
             return await _context.Logs.Include(log => log.Day).Where(log => log.Day != null && log.Day.WeekId == weekId).ToListAsync();
         }

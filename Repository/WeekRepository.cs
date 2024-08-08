@@ -27,12 +27,12 @@ namespace TimeLogger.Repository
             return await _context.Weeks.FindAsync(id);
         }
 
-        public async Task<Week?> GetWeekByWeekNumAsync(int? weekNum)
+        public async Task<Week?> GetWeekByWeekNumAndYearAsync(int weekNum, int year)
         {
-            return await _context.Weeks.Where(w => w.WeekNumber == weekNum).FirstOrDefaultAsync();
+            return await _context.Weeks.Where(w => w.Year == year && w.WeekNumber == weekNum).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Week>> GetWeeksAsync()
+        public async Task<List<Week>> GetWeeksAsync()
         {
             return await _context.Weeks.ToListAsync();
         }
