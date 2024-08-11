@@ -122,6 +122,8 @@ namespace TimeLogger.Controllers
             if (week != null)
             {
                 List<Day> days = await _dayRepository.GetDaysByWeekIdAsync(week.Id);
+                days = days.OrderBy(day => day.Date).ToList();
+
                 foreach (Day day in days)
                 {
                     day.Logs = await _logRepository.GetLogsByDayIdAsync(day.Id);

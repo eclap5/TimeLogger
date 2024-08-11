@@ -57,28 +57,34 @@
     </div>
 </div>
 <div class="container-fluid">
-    <h2>Logs for week @Model.Week?.WeekNumber</h2>
     @if (Model.Week != null)
     {
-        <div class="row">
-            @foreach (var day in Model.Week?.Days!)
-            {
-                <div class="col-md-2">
-                    <h4>@day.WeekDay - @day.Date</h4>
-                    <ul class="list-group">
-                        @foreach (var log in day.Logs)
-                        {
-                            <li class="list-group-item">
-                                <strong>@log.StartTime - @log.EndTime</strong>
-                                <br>
-                                <strong>@log.TaskTitle</strong>
-                                <p>@log.TaskDescription</p>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            }
-        </div>
+        <h2>Logs for week @Model.Week.WeekNumber</h2>
+        @if (Model.Week.Days != null)
+        {
+            <div class="row justify-content-center">
+                @foreach (var day in Model.Week.Days)
+                {
+                    <div class="col-md-auto">
+                        <h4>@day.WeekDay - @day.Date</h4>
+                        <ul class="list-group">
+                            @if (day.Logs != null)
+                            {
+                                foreach (var log in day.Logs)
+                                {
+                                    <li class="list-group-item">
+                                        <strong>@log.StartTime - @log.EndTime</strong>
+                                        <br>
+                                        <strong>@log.TaskTitle</strong>
+                                        <p>@log.TaskDescription</p>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
     }
 </div>
 
